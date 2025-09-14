@@ -61,6 +61,5 @@ electron-dist/
 
 # Application specific
 TestArea*/
-docs/
 *.bak
 *.backup
