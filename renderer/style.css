@@ -1,0 +1,347 @@
+/**
+ * Autoblo Stylesheet
+ * A dark-themed, modern UI for the file operations automation tool
+ */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES (Variables)
+   ======================================== */
+:root{
+  /* Color palette - Dark theme with blue accents */
+  --bg: #0f172a;          /* Main background - slate-900 */
+  --bg-2: #111827;        /* Secondary background - gray-900 */
+  --panel: #0b1220;       /* Panel background - deep blue */
+  --card: #0b1220;        /* Card background */
+  --border: #1f2937;      /* Border color - gray-800 */
+  --muted: #94a3b8;       /* Muted text - slate-400 */
+  --text: #e5e7eb;        /* Primary text - gray-200 */
+  --primary: #0ea5e9;     /* Primary accent - sky-500 */
+  --danger: #ef4444;      /* Danger/error color - red-500 */
+  --ghost: #334155;       /* Ghost button background - slate-700 */
+  
+  /* Effects */
+  --shadow: 0 18px 40px -15px rgba(0,0,0,.4);
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+*{ 
+  box-sizing: border-box; 
+}
+
+html, body{ 
+  height:100%; 
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font: 14px/1.5 "Segoe UI", system-ui, Roboto, Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: var(--text);
+  /* Gradient background with radial overlays for visual depth */
+  background:
+    radial-gradient(70% 70% at 10% 0%, rgba(14,165,233,.15), transparent 60%),
+    radial-gradient(50% 50% at 100% 0%, rgba(168,85,247,.12), transparent 60%),
+    radial-gradient(60% 60% at 40% 100%, rgba(14,165,233,.10), transparent 60%),
+    linear-gradient(180deg, #0b1020, #0b1020 30%, #0f172a);
+}
+
+/* ========================================
+   LAYOUT COMPONENTS
+   ======================================== */
+
+/* Top navigation bar */
+.topbar{
+  position: sticky; 
+  top:0; 
+  z-index:10;
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between;
+  padding: 12px 16px;
+  background: rgba(2,6,23,.4);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid var(--border);
+}
+
+.topbar__title{ 
+  font-weight:700; 
+}
+
+.topbar__actions{ 
+  display:flex; 
+  gap:8px; 
+}
+
+/* Main container grid layout */
+.container{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 360px);
+  grid-template-areas: "main panel";
+  gap: 16px;
+  padding: 16px;
+  min-height: calc(100vh - 60px);
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 900px) {
+  .container{
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "main"
+      "panel";
+  }
+}
+
+/* Main content area */
+.lane {
+  grid-area: main;
+  min-width: 0;
+}
+
+.lane__title{ 
+  margin: 0 0 8px 2px; 
+  color: var(--muted); 
+  font-weight:600; 
+}
+
+/* Side panel area */
+.panel {
+  grid-area: panel;
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+  min-width: 360px;
+}
+
+/* ========================================
+   BLOCK COMPONENTS
+   ======================================== */
+
+/* Blocks container - horizontal flow with arrows */
+.blocks{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 8px;
+  align-items: center;
+}
+
+/* Individual block styling */
+.block{ 
+  width: 360px;
+  min-width: 320px; 
+  max-width: 360px; 
+  padding: 14px; 
+}
+
+/* Responsive block sizing */
+@media (max-width: 900px) {
+  .block{ 
+    width: 100%;
+  }
+}
+
+.block__header{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  margin-bottom:6px; 
+}
+
+.block__caption{ 
+  color: var(--muted); 
+  font-weight:600; 
+}
+
+/* Arrow between blocks */
+.arrow{
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: #94a3b8; 
+  font-size: 28px; 
+  user-select: none;
+  width: 60px;
+  height: 100%;
+  min-height: 100px;
+}
+
+/* Empty state hint */
+.hint{
+  color: var(--muted); 
+  margin-top:6px;
+}
+
+/* ========================================
+   CARD COMPONENTS
+   ======================================== */
+
+/* Base card styling with glass morphism effect */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.25));
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+}
+
+.card__title{ 
+  padding:10px 12px; 
+  border-bottom:1px solid var(--border); 
+  color: var(--muted); 
+  font-weight:700; 
+}
+
+/* ========================================
+   FORM COMPONENTS
+   ======================================== */
+
+/* Form labels */
+.label{ 
+  display:block; 
+  margin-top:8px; 
+  margin-bottom:4px; 
+  color: var(--muted); 
+  font-weight:600; 
+}
+
+/* Input fields and selects */
+.input, .select{
+  width:100%; 
+  padding:10px 12px; 
+  border-radius:10px; 
+  border:1px solid var(--border);
+  background: #0c1426; 
+  color: var(--text); 
+  outline:none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus, .select:focus{ 
+  border-color: var(--primary); 
+  box-shadow:0 0 0 3px rgba(14,165,233,.15); 
+}
+
+/* Checkbox styling */
+.check{ 
+  display:flex; 
+  align-items:center; 
+  gap:8px; 
+  margin-top:8px; 
+  color: var(--text); 
+  cursor: pointer;
+}
+
+.check__box{ 
+  transform: scale(1.1); 
+  cursor: pointer;
+}
+
+/* Input group for file selection */
+.input-group{
+  display: flex;
+  gap: 4px;
+}
+
+.input-group .input{
+  flex: 1;
+}
+
+/* ========================================
+   BUTTON COMPONENTS
+   ======================================== */
+
+/* Base button styling */
+.btn{
+  border:1px solid var(--border);
+  background: #0b1220;
+  color: var(--text);
+  padding:8px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  transition: all .15s ease;
+  box-shadow: var(--shadow);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.btn:hover{ 
+  transform: translateY(-1px); 
+}
+
+/* Primary button variant */
+.btn-primary{ 
+  background: linear-gradient(180deg, #0ea5e9, #0284c7); 
+  border-color:#0284c7; 
+}
+
+.btn-primary:hover{ 
+  filter: brightness(1.05); 
+}
+
+/* Danger button variant */
+.btn-danger{ 
+  background: linear-gradient(180deg, #ef4444, #b91c1c); 
+  border-color:#b91c1c; 
+}
+
+.btn-danger:hover{ 
+  filter: brightness(1.05); 
+}
+
+/* Ghost button variant */
+.btn-ghost{ 
+  background: #0b1220; 
+}
+
+/* File browse button styling */
+.btn-browse{
+  padding: 10px 12px;
+  font-size: 16px;
+  min-width: 40px;
+  border-radius: 8px;
+  background: var(--ghost);
+  border: 1px solid var(--border);
+}
+
+.btn-browse:hover{
+  background: #475569;
+}
+
+/* ========================================
+   PANEL COMPONENTS
+   ======================================== */
+
+/* Panel pre-formatted text areas */
+.panel__pre{
+  margin:0; 
+  padding:12px; 
+  height:260px; 
+  overflow:auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  white-space: pre-wrap;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Custom scrollbar for webkit browsers */
+.panel__pre::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel__pre::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+  border-radius: 3px;
+}
+
+.panel__pre::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+.panel__pre::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Autoblo — 블록 시퀀스 실행기</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline';">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__title">Autoblo — 블록 시퀀스 실행기</div>
+    <div class="topbar__actions">
+      <button id="btn-add" class="btn btn-ghost">+ 신규 블록 추가</button>
+      <button id="btn-reset" class="btn btn-danger">초기화</button>
+      <button id="btn-run" class="btn btn-primary">실행</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="lane">
+      <h2 class="lane__title">시퀀스</h2>
+      <div id="blocks" class="blocks"></div>
+      <div id="empty-hint" class="hint">블록이 없습니다. ‘신규 블록 추가’를 눌러 시작하세요.</div>
+    </section>
+
+    <aside class="panel">
+      <div class="card">
+        <div class="card__title">계획(Plan)</div>
+        <pre id="plan" class="panel__pre"></pre>
+      </div>
+      <div class="card">
+        <div class="card__title">출력(Output)</div>
+        <pre id="output" class="panel__pre"></pre>
+      </div>
+    </aside>
+  </main>
+
+  <template id="block-template">
+    <div class="block card">
+      <div class="block__header">
+        <div class="block__caption"></div>
+      </div>
+
+      <label class="label">기능</label>
+      <select class="select select-kind">
+        <option value="mkdir">폴더 생성</option>
+        <option value="copy">파일 복사</option>
+        <option value="move">파일 이동</option>
+        <option value="delete">파일/폴더 삭제</option>
+      </select>
+
+      <div class="fields fields-mkdir">
+        <label class="label">경로</label>
+        <div class="input-group">
+          <input class="input input-mkdir-path" placeholder="생성할 폴더 경로" />
+          <button class="btn btn-browse btn-browse-folder" type="button">📁</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" class="check__box input-mkdir-rec" checked />
+          하위 경로까지 생성 (create_dir_all)
+        </label>
+      </div>
+
+      <div class="fields fields-copy" style="display:none">
+        <label class="label">From</label>
+        <div class="input-group">
+          <input class="input input-copy-from" placeholder="소스 파일/폴더 경로" />
+          <button class="btn btn-browse btn-browse-any" type="button">�</button>
+        </div>
+        <label class="label">To</label>
+        <div class="input-group">
+          <input class="input input-copy-to" placeholder="대상 파일/폴더 경로" />
+          <button class="btn btn-browse btn-browse-save" type="button">💾</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" class="check__box input-copy-ensure" checked />
+          부모 폴더 없으면 생성
+        </label>
+        <label class="check">
+          <input type="checkbox" class="check__box input-copy-over" />
+          대상 존재 시 덮어쓰기
+        </label>
+      </div>
+
+      <div class="fields fields-move" style="display:none">
+        <label class="label">From</label>
+        <div class="input-group">
+          <input class="input input-move-from" placeholder="소스 파일/폴더 경로" />
+          <button class="btn btn-browse btn-browse-any" type="button">�</button>
+        </div>
+        <label class="label">To</label>
+        <div class="input-group">
+          <input class="input input-move-to" placeholder="대상 파일/폴더 경로" />
+          <button class="btn btn-browse btn-browse-save" type="button">💾</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" class="check__box input-move-ensure" checked />
+          부모 폴더 없으면 생성
+        </label>
+        <label class="check">
+          <input type="checkbox" class="check__box input-move-over" />
+          대상 존재 시 덮어쓰기
+        </label>
+      </div>
+
+      <div class="fields fields-delete" style="display:none">
+        <label class="label">경로</label>
+        <div class="input-group">
+          <input class="input input-delete-path" placeholder="삭제할 파일/폴더 경로" />
+          <button class="btn btn-browse btn-browse-any" type="button">📂</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" class="check__box input-delete-force" />
+          강제 삭제 (폴더의 경우 하위 항목까지 삭제)
+        </label>
+      </div>
+    </div>
+  </template>
+
+  <!-- Load modules in correct order -->
+  <script src="./modules/BlockManager.js"></script>
+  <script src="./modules/PlanExecutor.js"></script>
+  <script src="./modules/AutobloApp.js"></script>
+  <script src="./renderer.js"></script>
+</body>
+</html>

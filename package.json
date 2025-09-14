@@ -1,0 +1,37 @@
+{
+  "name": "autoblo-electron",
+  "version": "0.1.0",
+  "main": "main.js",
+  "license": "MIT",
+  "description": "Autoblo — 블록 시퀀스 실행기 (File Operations Automation Tool)",
+  "author": "",
+  "keywords": [
+    "electron",
+    "file-operations",
+    "automation",
+    "batch-processing",
+    "gui"
+  ],
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0"
+  },
+  "build": {
+    "appId": "com.autoblo.electron",
+    "productName": "Autoblo",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/",
+      "package.json"
+    ]
+  }
+}
